@@ -4,4 +4,4 @@ git branch
 ```
 -feature/header
 -feature/footer
--featuren/index
+-feature/index
