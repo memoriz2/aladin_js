@@ -1,7 +1,10 @@
 # aladin_js
 
-git branch 
+git branch
+
 ```
 -feature/header
 -feature/footer
 -feature/index
+-feature/slide
+```
