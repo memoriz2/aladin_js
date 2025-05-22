@@ -3,19 +3,22 @@
     --primary-color: #007bff;
     --text-color: #333;
     --background-color: #fff;
-    --shadow-color: rgba(0,0,0,0.1);
-    
+    --shadow-color: rgba(0, 0, 0, 0.1);
+
     /* Spacing */
     --nav-padding: 1rem;
     --menu-item-margin: 0.5rem;
     --menu-item-padding: 0.5rem;
-    
+
     /* Font Sizes */
     --logo-font-size: 1.5rem;
     --menu-font-size-large: 0.85rem;
     --menu-font-size-medium: 0.8rem;
     --menu-font-size-small: 0.75rem;
     --menu-font-size-mobile: 0.7rem;
+
+    /* footer */
+    --border-style: 1px solid #e9ecef;
 }
 
 /* 메인 네비게이션 스타일 */
@@ -96,6 +99,61 @@
     transition: all 0.3s ease;
 }
 
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+main {
+    flex: 1;
+}
+
+/* footer css */
+#footer-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem 2rem;
+}
+
+#footer-container ul {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+    border-top: var(--border-style);
+    border-bottom: var(--border-style);
+}
+
+#footer-container ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: var(--menu-font-size-small);
+}
+
+#footer-container .footer-info-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 헤드라인(제목) 위쪽 기준으로 맞춤 */
+    gap: 4rem;
+    width: 100%;
+    max-width: 1100px; /* 필요시 최대 너비 제한 */
+    margin: 0 auto;
+}
+
+#footer-container .footer-info-row > div {
+    flex: 1;
+    min-width: 0;
+}
+
 /* 반응형 디자인 */
 @media (max-width: 1200px) {
     .nav-first-level a {
@@ -162,4 +220,8 @@
     .hamburger.active span:nth-child(3) {
         transform: rotate(-45deg) translate(7px, -6px);
     }
-} 
+
+    #footer-container ul li:nth-last-child(-n + 5) {
+        display: none;
+    }
+}
