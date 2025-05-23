@@ -1,5 +1,5 @@
 // header 로드
-const response = await fetch("header.html");
+const response = await fetch("./components/header.html");
 const html = await response.text();
 document.getElementById("header-container").innerHTML = html;
 
@@ -17,6 +17,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // footer 로드
-const footer = await fetch("footer.html");
+const footer = await fetch("./components/footer.html");
 const footerhtml = await footer.text();
 document.getElementById("footer-container").innerHTML = footerhtml;
+
+// 챗봇 팝업창 로드
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("chatLink").addEventListener("click", () => {
+        window.open(
+            "./components/chatBot.html",
+            "chatWindow",
+            "width=400,height=600"
+        );
+    });
+});
