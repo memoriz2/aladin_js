@@ -157,7 +157,7 @@ const ChatBot = () => {
             window.location.hostname === "127.0.0.1";
         const serverUrl = isDevelopment
             ? "http://localhost:3007"
-            : "https://memoriz2.github.io";
+            : "https://aladin-chat-server.onrender.com"; // Render 서버 URL
 
         // WebSocket 연결
         const newSocket = io(serverUrl, {

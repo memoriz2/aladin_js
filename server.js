@@ -8,7 +8,7 @@ const util = require("util");
 const execPromise = util.promisify(exec);
 
 const app = express();
-const PORT = 3007;
+const PORT = process.env.PORT || 3007;
 
 // 포트 사용 중인지 확인하고 종료하는 함수
 async function killPort(port) {
@@ -138,7 +138,7 @@ async function startServer() {
         // CORS 설정
         app.use(
             cors({
-                origin: "http://localhost:3000",
+                origin: ["http://localhost:3000", "https://memoriz2.github.io"],
                 credentials: true,
                 methods: ["GET", "POST", "OPTIONS"],
                 allowedHeaders: ["Content-Type", "Authorization"],
@@ -182,7 +182,7 @@ async function startServer() {
         // Socket.IO 서버 설정
         const io = new Server(server, {
             cors: {
-                origin: "http://localhost:3000",
+                origin: ["http://localhost:3000", "https://memoriz2.github.io"],
                 methods: ["GET", "POST"],
                 credentials: true,
                 allowedHeaders: ["Content-Type", "Authorization"],
