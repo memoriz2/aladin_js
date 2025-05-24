@@ -1,4 +1,4 @@
-const { useState } = React;
+const { useState, useEffect } = React;
 
 const MainMenuCard = ({ onButtonClick }) => (
     <div className="chat-buttons-card">
@@ -112,15 +112,149 @@ const ProductInquiryCard = ({ onPrev }) => (
     </div>
 );
 
+const LoadingDots = () => {
+    const [dots, setDots] = useState(".");
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setDots((prev) => {
+                if (prev.length >= 3) return ".";
+                return prev + ".";
+            });
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div
+            className="bot-bubble"
+            style={{
+                fontSize: "20px",
+                fontWeight: "bold",
+                color: "#009fe3",
+            }}
+        >
+            {dots}
+        </div>
+    );
+};
+
 const ChatBot = () => {
+    const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([{ type: "mainMenuCard" }]);
     const [inputMessage, setInputMessage] = useState("");
+    const [socket, setSocket] = useState(null);
+    const [isGenieConnected, setIsGenieConnected] = useState(false);
+    const [userId] = useState(
+        () => "user_" + Math.random().toString(36).substr(2, 9)
+    );
+
+    useEffect(() => {
+        // WebSocket 연결
+        const newSocket = io("http://localhost:3007", {
+            transports: ["websocket"],
+            reconnection: true,
+            reconnectionAttempts: 3,
+            reconnectionDelay: 1000,
+            timeout: 10000,
+            forceNew: true,
+            autoConnect: true,
+            withCredentials: true,
+        });
+
+        setSocket(newSocket);
+
+        // 연결 시 사용자 ID 전송
+        newSocket.on("connect", () => {
+            console.log("Connected to chat server");
+            newSocket.emit("userConnect", userId);
+        });
+
+        newSocket.on("connected", (data) => {
+            console.log("Server connection confirmed:", data);
+        });
+
+        newSocket.on("connect_error", (error) => {
+            console.error("Connection error:", error);
+            setMessages((prev) => [
+                ...prev,
+                {
+                    type: "message",
+                    text: "서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.",
+                    sender: "bot",
+                    timestamp: new Date().toLocaleString(),
+                },
+            ]);
+        });
+
+        newSocket.on("error", (error) => {
+            console.error("Socket error:", error);
+            setMessages((prev) => [
+                ...prev,
+                {
+                    type: "message",
+                    text:
+                        error.message ||
+                        "연결 오류가 발생했습니다. 다시 시도해주세요.",
+                    sender: "bot",
+                    timestamp: new Date().toLocaleString(),
+                },
+            ]);
+        });
+
+        // 관리자 메시지 수신
+        newSocket.on("adminMessage", (data) => {
+            console.log("Received admin message:", data);
+            setMessages((prev) => [
+                ...prev,
+                {
+                    type: "message",
+                    text: data.message,
+                    sender: "bot",
+                    timestamp: data.timestamp,
+                },
+            ]);
+        });
+
+        // 지니 연결 수신
+        newSocket.on("genieConnected", () => {
+            console.log("Genie connected");
+            setIsGenieConnected(true);
+            setMessages((prev) => [
+                ...prev,
+                {
+                    type: "message",
+                    text: "지니가 연결되었습니다.",
+                    sender: "bot",
+                    timestamp: new Date().toLocaleString(),
+                },
+            ]);
+        });
+
+        return () => {
+            newSocket.close();
+        };
+    }, [userId]);
 
     const handleSendMessage = () => {
-        if (inputMessage) {
-            setMessages([...messages, { text: inputMessage, sender: "user" }]);
-            setInputMessage("");
-        }
+        if (!inputMessage.trim() || !socket) return;
+
+        const message = {
+            type: "message",
+            text: inputMessage,
+            sender: "user",
+            timestamp: new Date().toLocaleString(),
+        };
+
+        // WebSocket을 통해 메시지 전송
+        socket.emit("userMessage", {
+            userId: userId,
+            message: inputMessage,
+        });
+
+        setMessages((prev) => [...prev, message]);
+        setInputMessage("");
     };
 
     const handleKeyDown = (e) => {
@@ -133,10 +267,26 @@ const ChatBot = () => {
     const handleButtonClick = (type) => {
         if (type === "제휴마케팅 안내") {
             setMessages([...messages, { type: "marketingMenuCard" }]);
+        } else if (type === "상담원 연결") {
+            setMessages([
+                ...messages,
+                {
+                    type: "message",
+                    text: "지니를 부르겠습니다.",
+                    sender: "bot",
+                    timestamp: new Date().toLocaleString(),
+                },
+                { type: "loadingDots" },
+            ]);
         } else {
             setMessages([
                 ...messages,
-                { text: `[${type}] 버튼을 눌렀습니다.`, sender: "bot" },
+                {
+                    type: "message",
+                    text: `[${type}] 버튼을 눌렀습니다.`,
+                    sender: "bot",
+                    timestamp: new Date().toLocaleString(),
+                },
             ]);
         }
     };
@@ -205,6 +355,19 @@ const ChatBot = () => {
                                 key={index}
                                 onPrev={handleProductInquiryPrev}
                             />
+                        );
+                    }
+                    if (message.type === "loadingDots") {
+                        return <LoadingDots key={index} />;
+                    }
+                    if (
+                        message.sender === "bot" &&
+                        message.type === "message"
+                    ) {
+                        return (
+                            <div key={index} className="bot-bubble">
+                                {message.text}
+                            </div>
                         );
                     }
                     // 사용자 메시지
