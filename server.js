@@ -1,11 +1,16 @@
-const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
-const cors = require("cors");
-const path = require("path");
-const { exec } = require("child_process");
-const util = require("util");
+import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import cors from "cors";
+import path from "path";
+import { exec } from "child_process";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import { util } from "util";
 const execPromise = util.promisify(exec);
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3007;
@@ -177,7 +182,7 @@ async function startServer() {
             res.sendFile(path.join(__dirname, "admin", "index.html"));
         });
 
-        const server = http.createServer(app);
+        const server = createServer(app);
 
         // Socket.IO 서버 설정
         const io = new Server(server, {
