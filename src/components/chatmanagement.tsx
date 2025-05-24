@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
-import type { Socket as SocketType } from "socket.io-client";
+import type { Socket } from "socket.io-client";
 
 interface Chat {
     id: string;
@@ -18,9 +18,9 @@ interface Chat {
 
 interface Message {
     id: string;
-    sender: "user" | "admin";
     content: string;
     timestamp: string;
+    sender: string;
 }
 
 interface UserMessage {
@@ -36,7 +36,7 @@ export const ChatManagement: React.FC = () => {
     const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage, setNewMessage] = useState("");
-    const [socket, setSocket] = useState<typeof SocketType | null>(null);
+    const [socket, setSocket] = useState<ReturnType<typeof io> | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     console.log("=== State Initialized ===");

@@ -3,11 +3,11 @@ import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 
 // 환경 변수로 base URL 설정
-const base = process.env.NODE_ENV === "production" ? "/admin/" : "/";
+const base = process.env.NODE_ENV === "production" ? "/aladin_js/" : "/";
 
 export default defineConfig({
     plugins: [react()],
-    base,
+    base: "/aladin_js/",
     build: {
         outDir: "dist",
         assetsDir: "assets",
@@ -21,5 +21,6 @@ export default defineConfig({
         alias: {
             "@": resolve(__dirname, "src"),
         },
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
     },
 });

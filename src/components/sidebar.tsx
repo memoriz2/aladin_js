@@ -1,14 +1,10 @@
 import React from "react";
-import { NavigateFunction } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface MenuItem {
     id: string;
     label: string;
     path: string;
-}
-
-interface SidebarProps {
-    onNavigate: NavigateFunction;
 }
 
 const menuItems: MenuItem[] = [
@@ -18,7 +14,9 @@ const menuItems: MenuItem[] = [
     { id: "settings", label: "설정", path: "/settings" },
 ];
 
-export const Sidebar: React.FC<SidebarProps> = ({ onNavigate }) => {
+export const Sidebar: React.FC = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="admin-sidebar">
             <nav>
@@ -29,7 +27,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onNavigate }) => {
                                 href="#"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    onNavigate(item.path);
+                                    navigate(item.path);
                                 }}
                             >
                                 {item.label}
