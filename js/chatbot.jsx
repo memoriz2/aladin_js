@@ -151,16 +151,24 @@ const ChatBot = () => {
     );
 
     useEffect(() => {
+        // 개발 환경과 프로덕션 환경 구분
+        const isDevelopment =
+            window.location.hostname === "localhost" ||
+            window.location.hostname === "127.0.0.1";
+        const serverUrl = isDevelopment
+            ? "http://localhost:3007"
+            : "https://memoriz2.github.io";
+
         // WebSocket 연결
-        const newSocket = io("http://localhost:3007", {
-            transports: ["websocket"],
+        const newSocket = io(serverUrl, {
+            transports: ["websocket", "polling"],
             reconnection: true,
-            reconnectionAttempts: 3,
+            reconnectionAttempts: 5,
             reconnectionDelay: 1000,
-            timeout: 10000,
+            timeout: 20000,
             forceNew: true,
             autoConnect: true,
-            withCredentials: true,
+            path: "/socket.io",
         });
 
         setSocket(newSocket);
