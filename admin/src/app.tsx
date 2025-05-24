@@ -5,10 +5,10 @@ import {
     Route,
     useNavigate,
 } from "react-router-dom";
-import { Dashboard } from "./components/Dashboard";
-import { Sidebar } from "./components/Sidebar";
-import { ChatManagement } from "./components/ChatManagement";
-import "./App.css";
+import { Dashboard } from "./components/dashboard";
+import { Sidebar } from "./components/sidebar";
+import { ChatManagement } from "./components/chatmanagement";
+import "./app.css";
 
 const AppContent: React.FC = () => {
     const navigate = useNavigate();
