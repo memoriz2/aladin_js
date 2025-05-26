@@ -6,7 +6,12 @@
         <title>알라딘</title>
         <link rel="stylesheet" href="./css/indexStyles.css" />
         <link rel="stylesheet" href="./css/bannerStyles.css" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+        <link rel="stylesheet" href="./css/style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+        />
+        <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
     </head>
     <body>
         <!-- header.html을 포함할 header -->
@@ -18,11 +23,12 @@
             <!-- 여기에 메인 컨텐츠 -->
         </main>
 
-        <!-- 스크립트 -->
         <footer id="footer-container"></footer>
-        <script type="module" src="./js/main.js"></script>
-        <script type="module" src="./js/createNavigation.js"></script>
-        <script type="module" src="./js/banner.js"></script>
+        <!-- 스크립트 -->
+
+        <script src="./js/banner.js"></script>
+        <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script type="module" src="./js/main.js"></script>
     </body>
 </html>
