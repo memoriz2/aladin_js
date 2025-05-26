@@ -3,20 +3,19 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Genie Admin</title>
-        <link rel="stylesheet" href="css/admin.css" />
-        <link rel="stylesheet" href="css/index.css" />
-        <script
-            crossorigin
-            src="https://unpkg.com/react@18/umd/react.development.js"
-        ></script>
-        <script
-            crossorigin
-            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
-        ></script>
+        <title>lamp</title>
+        <link rel="stylesheet" href="./css/admin.css" />
+        <link rel="stylesheet" href="./css/app.css" />
     </head>
     <body>
-        <div id="root"></div>
-        <script type="module" src="/src/main.tsx"></script>
+        <div id="app"></div>
+        <!-- Socket.IO CDN -->
+        <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+        <!-- 모든 JavaScript 파일을 모듈로 로드 -->
+        <script type="module" src="./src/components/sidebar.js"></script>
+        <script type="module" src="./src/components/dashboard.js"></script>
+        <script type="module" src="./src/components/chatmanagement.js"></script>
+        <script type="module" src="./src/app.js"></script>
+        <script type="module" src="./src/main.js"></script>
     </body>
 </html>
