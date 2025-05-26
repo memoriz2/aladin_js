@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="./css/indexStyles.css" />
         <link rel="stylesheet" href="./css/bannerStyles.css" />
         <link rel="stylesheet" href="./css/style.css" />
+        <link rel="stylesheet" href="./css/recentProduct.css" />
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
@@ -18,16 +19,20 @@
 
         <!-- 메인 컨텐츠 -->
         <main>
+            <!-- 메인 슬라이드 배너 -->
             <div id="main-banner-container"></div>
+            <!-- 상품 리스트 -->
+            <div id="product-list"></div>
+            <!-- 최근 본 상품 플로팅 -->
             <!-- 여기에 메인 컨텐츠 -->
         </main>
 
         <footer id="footer-container"></footer>
         <!-- 스크립트 -->
-
-        <script src="./js/banner.js"></script>
-        <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script type="module" src="./js/main.js"></script>
+        <script type="module" src="./js/createNavigation.js"></script>
+        <script src="./js/banner.js"></script>
+        <script src="./js/recentProduct.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     </body>
 </html>
