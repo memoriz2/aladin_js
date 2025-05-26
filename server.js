@@ -58,7 +58,10 @@ async function startServer() {
         // CORS 설정
         app.use(
             cors({
-                origin: ["https://aladin-chat-server.onrender.com"],
+                origin: [
+                    "https://memoriz2.github.io",
+                    "https://aladin-chat-server.onrender.com",
+                ],
                 credentials: true,
                 methods: ["GET", "POST", "OPTIONS"],
                 allowedHeaders: ["Content-Type", "Authorization"],
@@ -99,7 +102,10 @@ async function startServer() {
         // Socket.IO 서버 설정
         const io = new Server(server, {
             cors: {
-                origin: ["https://aladin-chat-server.onrender.com"],
+                origin: [
+                    "https://memoriz2.github.io",
+                    "https://aladin-chat-server.onrender.com",
+                ],
                 methods: ["GET", "POST"],
                 credentials: true,
                 allowedHeaders: ["Content-Type", "Authorization"],
