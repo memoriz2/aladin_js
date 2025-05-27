@@ -4,6 +4,11 @@
 }
 #main-banner-container {
     position: relative;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
 }
 .key-visual-background {
     position: absolute;
@@ -12,13 +17,11 @@
     width: 100%;
     z-index: -1;
 }
-.key-visual-background .swiper {
-}
-.key-visual-background .swiper-wrapper {
-}
+
 .key-visual-background .swiper-slide {
     height: 418px;
 }
+
 .bg-slide.slide1 {
     background-image: url("../img/img_bg_banner_001.png");
 }
@@ -50,7 +53,6 @@
 .main-slide.slide5 {
     background-image: url("../img/img_banner_005.png");
 }
-
 .key-visual-inner {
     margin-top: 60px;
 }
@@ -58,30 +60,60 @@
     overflow: visible;
 }
 .key-visual-inner .swiper-slide {
-    width: 684px !important;
-    height: 430px;
+    aspect-ratio: 16/10;  /* 가로세로 비율 고정 */
     border-radius: 20px;
     overflow: hidden;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.01) 0px 10px 10px -5px;
+    background-size: cover;
+    background-position: center;
 }
 .key-visual-inner .swiper-slide a {
     display: block;
     width: 100%;
     height: 100%;
 }
-.key-visual-inner .swiper-pagination {
-}
-.key-visual-inner .swiper-button-prev,
-.key-visual-inner .swiper-button-next {
-}
+
+.key-visual-inner .swiper-button-next,
 .key-visual-inner .swiper-button-prev {
+    display: none;
 }
-.key-visual-inner .swiper-button-next {
+
+/* PC (1024px 이상) */
+@media (min-width: 1024px) {
+    .key-visual-inner .swiper-slide {
+        width: 684px !important;
+    }
+
+    .key-visual-inner .swiper-button-next,
+    .key-visual-inner .swiper-button-prev {
+        display: flex;
+    }
+}
+
+/* 태블릿 (769px ~ 1023px) */
+@media (min-width: 769px) and (max-width: 1023px) {
+    .key-visual-inner {
+        padding: 0 10vw; /* 양쪽에 여백 줘서 가운데 정렬 효과 */
+    }
+    
+    .key-visual-inner .swiper-slide {
+
+    }
+}
+
+/* 모바일 (768px 이하) */
+@media (max-width: 768px) {
+    .key-visual-inner {
+       padding: 0 8vw; /* 모바일용 여백 */
+    }
+    
+    .key-visual-inner .swiper-slide {
+        
+    }
 }
 
 @media (max-width: 900px) {
-    .swiper-slide {
-    }
+
     .bg-slide.slide1 {
         background-image: url("../img/img_bg_banner_001_m.png");
     }
